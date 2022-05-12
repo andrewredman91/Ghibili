@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import MovieList from '../components/MovieList';
 
 const MoviesContainer = () => {
   const [movies, setMovies] = useState([]);
-
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
       getMovies();
@@ -14,22 +15,24 @@ const MoviesContainer = () => {
       .then(movies => setMovies(movies))
   }
 
-  const listMovies = movies.map(movie => {
-    return (
-      <li>{movie.title}</li>
-    )
-  })
-      
+  const onMovieClick = (movie) => {
+    setSelectedMovie(movie);
+  }
 
 
   return (
-    <ul>
-      {listMovies}
-    </ul>
+    <>
+      <ul>
+        <MovieList movies={movies} onMovieClick=
+        {onMovieClick}></MovieList>
+      </ul>
+      <p>
+        {selectedMovie ? selectedMovie.description : null}
+      </p>
+    </>
+
   )
 
 }
-
-
 
 export default MoviesContainer;
